@@ -48,3 +48,8 @@ nexora-phone-explorer/
 ├── index.html
 └── package.json
 ```
+
+
+## Demo login and registration
+
+NEXORA includes a front-end-only login/register experience to demonstrate form design and interaction. It does **not** create real user accounts, verify passwords, or provide protected user data. It stores only a temporary demo profile (name/email) in the current browser tab's `sessionStorage`; passwords are never stored. Use fictional credentials only. For production authentication, connect a provider such as Supabase Auth or Firebase Authentication and configure its authorized domains/redirect URLs.

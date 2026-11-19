@@ -31,6 +31,9 @@
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
         <i class="fa-solid fa-sun"></i><span>Light mode</span>
       </button>
+      <button class="auth-trigger" id="auth-open" type="button" aria-haspopup="dialog" aria-controls="auth-modal">
+        <i class="fa-regular fa-user"></i><span id="auth-trigger-label">Sign in</span>
+      </button>
       <a class="nav-cta" href="#discover">Explore phones <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
       <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
@@ -165,6 +168,60 @@
       <div class="modal-content" id="modal-content"></div>
     </section>
   </div>
+
+  <div class="auth-backdrop" id="auth-modal" aria-hidden="true">
+    <section class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="auth-heading">
+      <button class="auth-close" id="auth-close" type="button" aria-label="Close sign in"><i class="fa-solid fa-xmark"></i></button>
+      <aside class="auth-visual">
+        <a class="auth-brand" href="#top"><span class="brand-mark"><i class="fa-solid fa-mobile-screen-button"></i></span><span>NEXORA<span class="brand-dot">.</span></span></a>
+        <div class="auth-visual-content">
+          <span class="auth-visual-kicker"><i class="fa-solid fa-sparkles"></i> YOUR TECH JOURNEY</span>
+          <h2>Make room for<br /><span>what's next.</span></h2>
+          <p>Keep your discovery experience close. Sign in to preview your personal Nexora space.</p>
+          <div class="auth-feature"><span><i class="fa-solid fa-bookmark"></i></span><div><strong>Your own space</strong><small>A friendly account experience demo</small></div></div>
+          <div class="auth-feature"><span><i class="fa-solid fa-bolt"></i></span><div><strong>Made for explorers</strong><small>Find, compare and discover</small></div></div>
+        </div>
+        <span class="auth-visual-foot">DISCOVER SOMETHING BRILLIANT.</span>
+      </aside>
+      <div class="auth-panel">
+        <div class="auth-panel-top"><span class="auth-mobile-brand">NEXORA<span class="brand-dot">.</span></span><span class="demo-pill"><span></span> FRONT-END DEMO</span></div>
+        <div id="auth-forms-shell">
+          <div class="auth-heading-block">
+            <span class="auth-eyebrow">WELCOME TO NEXORA</span>
+            <h2 id="auth-heading">Welcome <span>back.</span></h2>
+            <p id="auth-subheading">Sign in to continue exploring.</p>
+          </div>
+          <div class="auth-tabs" role="tablist" aria-label="Authentication options">
+            <button class="auth-tab active" id="auth-tab-login" type="button" role="tab" aria-selected="true" data-auth-tab="login">Sign in</button>
+            <button class="auth-tab" id="auth-tab-register" type="button" role="tab" aria-selected="false" data-auth-tab="register">Create account</button>
+          </div>
+          <form class="auth-form" id="login-form" novalidate>
+            <label class="auth-field"><span>Email address</span><span class="auth-input-wrap"><i class="fa-regular fa-envelope"></i><input type="email" name="email" placeholder="you@example.com" autocomplete="email" required /></span></label>
+            <label class="auth-field"><span>Password</span><span class="auth-input-wrap"><i class="fa-solid fa-lock"></i><input id="login-password" type="password" name="password" placeholder="Enter any demo password" autocomplete="current-password" minlength="6" required /><button class="password-toggle" type="button" data-password-target="login-password" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></span></label>
+            <button class="auth-submit" type="submit">Sign in to Nexora <i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+          <form class="auth-form" id="register-form" hidden novalidate>
+            <label class="auth-field"><span>Your name</span><span class="auth-input-wrap"><i class="fa-regular fa-user"></i><input type="text" name="name" placeholder="Alex Morgan" autocomplete="name" minlength="2" required /></span></label>
+            <label class="auth-field"><span>Email address</span><span class="auth-input-wrap"><i class="fa-regular fa-envelope"></i><input type="email" name="email" placeholder="you@example.com" autocomplete="email" required /></span></label>
+            <label class="auth-field"><span>Create password</span><span class="auth-input-wrap"><i class="fa-solid fa-lock"></i><input id="register-password" type="password" name="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required /><button class="password-toggle" type="button" data-password-target="register-password" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></span></label>
+            <label class="auth-field"><span>Confirm password</span><span class="auth-input-wrap"><i class="fa-solid fa-shield-halved"></i><input id="register-confirm-password" type="password" name="confirmPassword" placeholder="Enter it once more" autocomplete="new-password" minlength="6" required /><button class="password-toggle" type="button" data-password-target="register-confirm-password" aria-label="Show password"><i class="fa-regular fa-eye"></i></button></span></label>
+            <button class="auth-submit" type="submit">Create demo account <i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+          <p class="auth-feedback" id="auth-feedback" role="status" aria-live="polite" hidden></p>
+          <p class="auth-switch-copy" id="auth-switch-copy">New to Nexora? <button type="button" data-auth-switch="register">Create an account</button></p>
+        </div>
+        <div class="auth-session" id="auth-session" hidden>
+          <span class="auth-session-icon"><i class="fa-solid fa-user-check"></i></span>
+          <span class="auth-eyebrow">DEMO SESSION ACTIVE</span>
+          <h2>You're in<span>.</span></h2>
+          <p id="auth-session-name">Welcome to your Nexora demo space.</p>
+          <button class="auth-submit auth-signout" id="auth-signout" type="button">Sign out <i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </div>
+        <div class="auth-demo-notice"><i class="fa-solid fa-circle-info"></i><span><strong>Demo authentication only.</strong> This static site does not create real accounts, verify passwords or store passwords. Use fictional details only. Real authentication needs a service such as Supabase or Firebase.</span></div>
+      </div>
+    </section>
+  </div>
+  <div class="auth-toast" id="auth-toast" role="status" aria-live="polite"></div>
 
   <script src="./js/app.js" defer></script>
 </body>

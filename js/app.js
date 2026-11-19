@@ -16,6 +16,20 @@ const modalClose = document.getElementById('modal-close');
 const menuToggle = document.getElementById('menu-toggle');
 const themeToggle = document.getElementById('theme-toggle');
 const mainNav = document.querySelector('.main-nav');
+const authOpen = document.getElementById('auth-open');
+const authModal = document.getElementById('auth-modal');
+const authClose = document.getElementById('auth-close');
+const authTriggerLabel = document.getElementById('auth-trigger-label');
+const authFormsShell = document.getElementById('auth-forms-shell');
+const authSession = document.getElementById('auth-session');
+const authSessionName = document.getElementById('auth-session-name');
+const authFeedback = document.getElementById('auth-feedback');
+const authToast = document.getElementById('auth-toast');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const authHeading = document.getElementById('auth-heading');
+const authSubheading = document.getElementById('auth-subheading');
+const authSwitchCopy = document.getElementById('auth-switch-copy');
 
 let currentSearch = DEFAULT_SEARCH;
 let lastFocusedElement = null;
@@ -461,6 +475,182 @@ const getSavedTheme = () => {
   }
 };
 
+// ---------------------------------------------------------------------------
+// Demo-only authentication UI. It stores only a temporary display profile in
+// sessionStorage; passwords are never stored or verified by this static site.
+// ---------------------------------------------------------------------------
+const DEMO_SESSION_KEY = 'nexora-demo-session';
+let demoSession = null;
+let authLastFocusedElement = null;
+let authToastTimer = null;
+
+const readDemoSession = () => {
+  try {
+    const saved = sessionStorage.getItem(DEMO_SESSION_KEY);
+    if (!saved) return null;
+    const parsed = JSON.parse(saved);
+    return parsed && typeof parsed.email === 'string' ? parsed : null;
+  } catch {
+    return null;
+  }
+};
+
+const updateAuthTrigger = () => {
+  const signedIn = Boolean(demoSession);
+  authTriggerLabel.textContent = signedIn ? 'Account' : 'Sign in';
+  authOpen.innerHTML = signedIn
+    ? '<i class="fa-solid fa-user-check"></i><span id="auth-trigger-label">Account</span>'
+    : '<i class="fa-regular fa-user"></i><span id="auth-trigger-label">Sign in</span>';
+  authOpen.setAttribute('aria-label', signedIn ? 'Open demo account' : 'Open sign in and register');
+};
+
+const showAuthToast = (message) => {
+  authToast.textContent = message;
+  authToast.classList.add('visible');
+  window.clearTimeout(authToastTimer);
+  authToastTimer = window.setTimeout(() => authToast.classList.remove('visible'), 3400);
+};
+
+const showAuthFeedback = (message, type = 'error') => {
+  authFeedback.hidden = false;
+  authFeedback.className = `auth-feedback ${type}`;
+  authFeedback.textContent = message;
+};
+
+const refreshAuthPanel = () => {
+  const isSignedIn = Boolean(demoSession);
+  authFormsShell.hidden = isSignedIn;
+  authSession.hidden = !isSignedIn;
+  if (isSignedIn) {
+    authSessionName.textContent = `${demoSession.name || 'Explorer'} · ${demoSession.email}`;
+  }
+};
+
+const setAuthMode = (mode) => {
+  const isRegister = mode === 'register';
+  document.querySelectorAll('[data-auth-tab]').forEach((tab) => {
+    const active = tab.dataset.authTab === mode;
+    tab.classList.toggle('active', active);
+    tab.setAttribute('aria-selected', String(active));
+  });
+  loginForm.hidden = isRegister;
+  registerForm.hidden = !isRegister;
+  authHeading.innerHTML = isRegister ? 'Create your <span>space.</span>' : 'Welcome <span>back.</span>';
+  authSubheading.textContent = isRegister ? 'A fresh start for your tech discoveries.' : 'Sign in to continue exploring.';
+  authSwitchCopy.innerHTML = isRegister
+    ? 'Already have a demo session? <button type="button" data-auth-switch="login">Sign in instead</button>'
+    : 'New to Nexora? <button type="button" data-auth-switch="register">Create an account</button>';
+  authFeedback.hidden = true;
+};
+
+const openAuth = (mode = 'login') => {
+  authLastFocusedElement = document.activeElement;
+  refreshAuthPanel();
+  setAuthMode(mode);
+  authModal.classList.add('open');
+  authModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('auth-open');
+  authClose.focus();
+};
+
+const closeAuth = () => {
+  authModal.classList.remove('open');
+  authModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('auth-open');
+  if (authLastFocusedElement && typeof authLastFocusedElement.focus === 'function') authLastFocusedElement.focus();
+};
+
+const startDemoSession = (name, email) => {
+  demoSession = { name, email, signedInAt: new Date().toISOString() };
+  try {
+    sessionStorage.setItem(DEMO_SESSION_KEY, JSON.stringify(demoSession));
+  } catch (error) {
+    console.warn('Demo session could not be stored in this tab.', error);
+  }
+  updateAuthTrigger();
+  refreshAuthPanel();
+  closeAuth();
+  showAuthToast(`Welcome to Nexora, ${name || 'Explorer'}! Demo session started.`);
+};
+
+authOpen.addEventListener('click', () => openAuth(demoSession ? 'login' : 'login'));
+authClose.addEventListener('click', closeAuth);
+authModal.addEventListener('click', (event) => {
+  if (event.target === authModal) closeAuth();
+});
+document.querySelectorAll('[data-auth-tab]').forEach((tab) => {
+  tab.addEventListener('click', () => setAuthMode(tab.dataset.authTab));
+});
+document.addEventListener('click', (event) => {
+  const switchButton = event.target.closest('[data-auth-switch]');
+  if (switchButton) setAuthMode(switchButton.dataset.authSwitch);
+});
+document.querySelectorAll('[data-password-target]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const input = document.getElementById(button.dataset.passwordTarget);
+    if (!input) return;
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    button.innerHTML = `<i class="fa-regular ${show ? 'fa-eye-slash' : 'fa-eye'}"></i>`;
+  });
+});
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(loginForm);
+  const email = String(formData.get('email') || '').trim();
+  const password = String(formData.get('password') || '');
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAuthFeedback('Enter a valid email address to continue.');
+    return;
+  }
+  if (password.length < 6) {
+    showAuthFeedback('Enter at least 6 characters for the demo password.');
+    return;
+  }
+  // Deliberately does not send or persist the password. This is a visual demo.
+  startDemoSession(email.split('@')[0], email);
+});
+
+registerForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const formData = new FormData(registerForm);
+  const name = String(formData.get('name') || '').trim();
+  const email = String(formData.get('email') || '').trim();
+  const password = String(formData.get('password') || '');
+  const confirmPassword = String(formData.get('confirmPassword') || '');
+  if (name.length < 2) {
+    showAuthFeedback('Please enter a name with at least 2 characters.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showAuthFeedback('Enter a valid email address.');
+    return;
+  }
+  if (password.length < 6) {
+    showAuthFeedback('Your demo password must contain at least 6 characters.');
+    return;
+  }
+  if (password !== confirmPassword) {
+    showAuthFeedback('Those passwords do not match. Please try again.');
+    return;
+  }
+  // Store only the visible demo profile in sessionStorage, never the password.
+  startDemoSession(name, email);
+});
+
+document.getElementById('auth-signout').addEventListener('click', () => {
+  demoSession = null;
+  try { sessionStorage.removeItem(DEMO_SESSION_KEY); } catch (error) {
+    console.warn('Demo session could not be cleared.', error);
+  }
+  updateAuthTrigger();
+  refreshAuthPanel();
+  closeAuth();
+  showAuthToast('You have signed out of the demo session.');
+});
+
 searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   loadPhones(searchInput.value);
@@ -475,7 +665,8 @@ modal.addEventListener('click', (event) => {
   if (event.target === modal) closeModal();
 });
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  if (event.key === 'Escape' && authModal.classList.contains('open')) closeAuth();
+  else if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
 });
 
 menuToggle.addEventListener('click', () => {
@@ -497,6 +688,9 @@ themeToggle.addEventListener('click', () => {
   applyTheme(nextTheme);
 });
 
+demoSession = readDemoSession();
+updateAuthTrigger();
+refreshAuthPanel();
 applyTheme(getSavedTheme());
 document.getElementById('current-year').textContent = new Date().getFullYear();
 loadPhones(DEFAULT_SEARCH);
