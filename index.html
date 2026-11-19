@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080c18" />
+  <meta name="description" content="Explore and compare smartphone models with Nexora Phone Explorer." />
+  <title>Nexora — Find your next phone</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div class="page-glow page-glow-one" aria-hidden="true"></div>
+  <div class="page-glow page-glow-two" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#top" aria-label="Nexora home">
+        <span class="brand-mark"><i class="fa-solid fa-mobile-screen-button"></i></span>
+        <span>NEXORA<span class="brand-dot">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#discover">Discover</a>
+        <a class="nav-link" href="#how-it-works">How it works</a>
+        <a class="nav-link" href="#about">About</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+        <i class="fa-solid fa-sun"></i><span>Light mode</span>
+      </button>
+      <a class="nav-cta" href="#discover">Explore phones <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-pulse"></span> YOUR NEXT PHONE, DISCOVERED</div>
+        <h1>Find the phone<br />that feels <span class="gradient-text">like yours.</span></h1>
+        <p class="hero-description">A better way to explore smartphones. Search the latest models, discover the details, and find the one that fits your world.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#discover">Explore the collection <i class="fa-solid fa-arrow-down"></i></a>
+          <a class="text-link" href="#how-it-works">See how it works <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div><strong>Phone data explorer</strong><span>Connected to the Programming Hero class API</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Decorative smartphone illustration">
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="art-star star-one">✦</div>
+        <div class="art-star star-two">✧</div>
+        <div class="art-chip chip-top"><i class="fa-solid fa-camera"></i><span>Capture more</span></div>
+        <div class="art-chip chip-bottom"><i class="fa-solid fa-microchip"></i><span>Power your day</span></div>
+        <div class="phone-visual">
+          <div class="phone-side-button"></div>
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-island"></div>
+              <div class="screen-time">09:41</div>
+              <div class="screen-orb orb-purple"></div>
+              <div class="screen-orb orb-blue"></div>
+              <div class="screen-caption">MAKE<br />IT YOURS<span>.</span></div>
+              <div class="screen-bottom"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="art-label"><span class="art-label-dot"></span> TECH, IN YOUR POCKET</div>
+      </div>
+    </section>
+
+    <section class="metrics container" aria-label="What you can do">
+      <div class="metric"><span class="metric-icon"><i class="fa-solid fa-magnifying-glass"></i></span><div><strong>Search</strong><span>Find a model</span></div></div>
+      <div class="metric"><span class="metric-icon"><i class="fa-solid fa-layer-group"></i></span><div><strong>Explore</strong><span>Browse phone cards</span></div></div>
+      <div class="metric"><span class="metric-icon"><i class="fa-solid fa-circle-info"></i></span><div><strong>Discover</strong><span>View key details</span></div></div>
+      <div class="metric-note">Simple search.<br /><span>Useful details.</span></div>
+    </section>
+
+    <section class="discover-section" id="discover">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow section-eyebrow">THE COLLECTION</div>
+            <h2>Find your <span class="gradient-text">next favourite.</span></h2>
+            <p class="section-description">Search by brand or model and explore the phones that match your style.</p>
+          </div>
+          <div class="results-note"><span class="live-dot"></span> Programming Hero API · live when available</div>
+        </div>
+
+        <div class="search-panel">
+          <form class="search-form" id="search-form">
+            <label class="search-icon" for="phone-search"><i class="fa-solid fa-magnifying-glass"></i></label>
+            <input id="phone-search" name="search" type="search" placeholder="Try iPhone, Samsung, Pixel..." autocomplete="off" />
+            <button class="search-button" type="submit">Search <i class="fa-solid fa-arrow-right"></i></button>
+          </form>
+          <div class="quick-searches">
+            <span>POPULAR:</span>
+            <button class="quick-chip" type="button" data-search="iphone">iPhone</button>
+            <button class="quick-chip" type="button" data-search="samsung">Samsung</button>
+            <button class="quick-chip" type="button" data-search="xiaomi">Xiaomi</button>
+            <button class="quick-chip" type="button" data-search="google">Google</button>
+          </div>
+        </div>
+
+        <div class="collection-toolbar">
+          <div><span class="toolbar-kicker">BROWSE RESULTS</span><h3 id="results-heading">Popular phones</h3></div>
+          <div class="result-count" id="result-count">Getting phones ready...</div>
+        </div>
+
+        <div class="api-status" id="api-status" role="status" aria-live="polite" hidden></div>
+        <div class="phone-grid" id="phone-grid" aria-live="polite">
+          <div class="loading-state"><span class="loader"></span><p>Finding something brilliant...</p></div>
+        </div>
+        <div class="api-note" id="api-note"><i class="fa-solid fa-circle-info"></i> Live phone information and product images are loaded from the Programming Hero API when its service is available. Preview photos appear only when the class API cannot be reached.</div>
+      </div>
+    </section>
+
+    <section class="how-section container" id="how-it-works">
+      <div class="how-intro">
+        <div class="eyebrow">NO COMPLICATED STUFF</div>
+        <h2>Three steps.<br /><span class="gradient-text">One great find.</span></h2>
+        <p>Everything starts with a search. The page requests phone data, turns the response into cards, and lets you open a model for more details.</p>
+      </div>
+      <div class="steps-list">
+        <article class="step-card"><span class="step-number">01</span><span class="step-icon"><i class="fa-solid fa-keyboard"></i></span><div><h3>Search a phone</h3><p>Enter a brand or model name in the search bar.</p></div><i class="fa-solid fa-arrow-up-right-from-square step-arrow"></i></article>
+        <article class="step-card"><span class="step-number">02</span><span class="step-icon"><i class="fa-solid fa-cloud-arrow-down"></i></span><div><h3>Get live results</h3><p>JavaScript uses Fetch API to request matching phone data.</p></div><i class="fa-solid fa-arrow-up-right-from-square step-arrow"></i></article>
+        <article class="step-card"><span class="step-number">03</span><span class="step-icon"><i class="fa-solid fa-mobile-screen"></i></span><div><h3>Explore the details</h3><p>Open a phone card to see the available specifications.</p></div><i class="fa-solid fa-arrow-up-right-from-square step-arrow"></i></article>
+      </div>
+    </section>
+
+    <section class="about-strip" id="about">
+      <div class="container about-inner">
+        <div class="about-symbol"><i class="fa-solid fa-sparkles"></i></div>
+        <div><div class="eyebrow">BUILT TO MAKE EXPLORING EASY</div><h2>Good tech choices start with <span class="gradient-text">good information.</span></h2></div>
+        <a class="button button-outline" href="#discover">Start exploring <i class="fa-solid fa-arrow-up"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand-block">
+        <a class="brand" href="#top"><span class="brand-mark"><i class="fa-solid fa-mobile-screen-button"></i></span><span>NEXORA<span class="brand-dot">.</span></span></a>
+        <p>A clean little space to discover your next smartphone.</p>
+      </div>
+      <div class="footer-links"><span class="footer-heading">EXPLORE</span><a href="#discover">Phone collection</a><a href="#how-it-works">How it works</a><a href="#about">About Nexora</a></div>
+      <div class="footer-links"><span class="footer-heading">PROJECT</span><span>HTML · CSS · JavaScript</span><span>Fetch API integration</span><span>Responsive front-end</span></div>
+      <a class="back-top" href="#top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="current-year"></span> NEXORA. Made for curious minds.</span><span class="footer-status"><span class="live-dot"></span> API-powered experience</span></div>
+  </footer>
+
+  <div class="modal-backdrop" id="phone-modal" aria-hidden="true">
+    <section class="phone-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" id="modal-close" type="button" aria-label="Close details"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-content" id="modal-content"></div>
+    </section>
+  </div>
+
+  <script src="./js/app.js" defer></script>
+</body>
+</html>
