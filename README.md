@@ -22,6 +22,7 @@ Preview entries are not live API records. Their sample product images are direct
 - CSS Grid, Flexbox, transitions, and responsive layout.
 - Dark/light mode with saved preference.
 - Loading, empty, timeout, API error, and image fallback states.
+- Responsive login/register demo modal with phone-safe scrolling and form sizing.
 
 ## Run locally
 
